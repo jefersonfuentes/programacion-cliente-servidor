@@ -1,0 +1,176 @@
+// CLASE ABSTRACTA BASE
+abstract class Animal {
+    protected String nombre;
+    protected int edad;
+
+    public Animal(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    public abstract void hacerSonido(); // Método abstracto
+    public abstract void moverse(); // Método abstracto
+
+    public void mostrarInfo() {
+        System.out.println("Nombre: " + nombre + ", Edad: " + edad);
+    }
+}
+
+// SEGUNDO NIVEL - CLASE ABSTRACTA INTERMEDIA
+abstract class Mamifero extends Animal {
+    protected String tipoPelo;
+
+    public Mamifero(String nombre, int edad, String tipoPelo) {
+        super(nombre, edad);
+        this.tipoPelo = tipoPelo;
+    }
+
+    public abstract void amamantar(); // Método abstracto
+}
+
+// INTERFAZ PARA ANIMALES DOMÉSTICOS
+interface Mascota {
+    void jugar();
+    void mostrarCarino();
+}
+
+// TERCER NIVEL - CLASES CONCRETAS
+class Felino extends Mamifero {
+    protected boolean garrasRetractiles;
+
+    public Felino(String nombre, int edad, String tipoPelo, boolean garrasRetractiles) {
+        super(nombre, edad, tipoPelo);
+        this.garrasRetractiles = garrasRetractiles;
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " hace un sonido felino.");
+    }
+
+    @Override
+    public void moverse() {
+        System.out.println(nombre + " se mueve sigilosamente.");
+    }
+
+    @Override
+    public void amamantar() {
+        System.out.println(nombre + " amamanta a sus crías.");
+    }
+}
+
+class Canino extends Mamifero {
+    protected boolean olfatoDesarrollado;
+
+    public Canino(String nombre, int edad, String tipoPelo, boolean olfatoDesarrollado) {
+        super(nombre, edad, tipoPelo);
+        this.olfatoDesarrollado = olfatoDesarrollado;
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " ladra o aúlla.");
+    }
+
+    @Override
+    public void moverse() {
+        System.out.println(nombre + " corre en manadas.");
+    }
+
+    @Override
+    public void amamantar() {
+        System.out.println(nombre + " amamanta a sus crías.");
+    }
+}
+
+// GATO (HEREDA DE FELINO Y ES UNA MASCOTA)
+class Gato extends Felino implements Mascota {
+    public Gato(String nombre, int edad, String tipoPelo) {
+        super(nombre, edad, tipoPelo, true);
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " maulla: ¡Miau!");
+    }
+
+    @Override
+    public void jugar() {
+        System.out.println(nombre + " juega con una bola de lana.");
+    }
+
+    @Override
+    public void mostrarCarino() {
+        System.out.println(nombre + " se frota contra tu pierna.");
+    }
+
+    public void ronronear() {
+        System.out.println(nombre + " está ronroneando...");
+    }
+}
+
+// PERRO (HEREDA DE CANINO Y ES UNA MASCOTA)
+class Perro extends Canino implements Mascota {
+    public Perro(String nombre, int edad, String tipoPelo) {
+        super(nombre, edad, tipoPelo, true);
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " ladra: ¡Guau Guau!");
+    }
+
+    @Override
+    public void jugar() {
+        System.out.println(nombre + " juega con su dueño.");
+    }
+
+    @Override
+    public void mostrarCarino() {
+        System.out.println(nombre + " mueve la cola felizmente.");
+    }
+}
+
+// LEÓN (HEREDA DE FELINO, NO ES MASCOTA)
+class Leon extends Felino {
+    public Leon(String nombre, int edad, String tipoPelo) {
+        super(nombre, edad, tipoPelo, false);
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " ruge: ¡ROOOOAR!");
+    }
+
+    public void cazar() {
+        System.out.println(nombre + " está cazando en la sabana.");
+    }
+}
+
+// CLASE PRINCIPAL PARA EJECUTAR
+public class JerarquiaAnimales {
+    public static void main(String[] args) {
+        Gato gato = new Gato("Milo", 3, "Corto");
+        Perro perro = new Perro("Rex", 5, "Medio");
+        Leon leon = new Leon("Simba", 7, "Largo");
+
+        System.out.println("=== Información del Gato ===");
+        gato.mostrarInfo();
+        gato.hacerSonido();
+        gato.jugar();
+        gato.mostrarCarino();
+        gato.ronronear();
+
+        System.out.println("\n=== Información del Perro ===");
+        perro.mostrarInfo();
+        perro.hacerSonido();
+        perro.jugar();
+        perro.mostrarCarino();
+
+        System.out.println("\n=== Información del León ===");
+        leon.mostrarInfo();
+        leon.hacerSonido();
+        leon.moverse();
+        leon.cazar();
+    }
+}
